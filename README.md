@@ -13,13 +13,12 @@
   * [Installation](#installation)
   * [Usage](#usage)
   * [Contribution Guidelines](#contribution-guidelines)
-  * [Tests](#tests)
   * [Questions](#questions)
   
 
   ## Installation
 
-  Download this repo or visit this app's heroku [page](https://shrouded-retreat-08301.herokuapp.com/notes):
+  Download this repo or visit this app's heroku [page](https://shrouded-retreat-08301.herokuapp.com/notes).
 
   ## Usage
 
@@ -43,10 +42,3 @@
   ## License 
 
   Licensed under [MIT License](https://opensource.org/licenses/MIT). 
-
-  ---
-
-  ## Tests
-
-  No tests
-  

@@ -70,7 +70,11 @@ app.post('/api/notes', (req, res) => {
 // DELETE Route for notes API
 app.delete('/api/notes/:id', (req, res) => {
   console.info(`${req.method} request received to delete a note`);
-  console.log(notes)
+  const deleteId = req.params.id;
+  const newNotes = notes.filter(note => note.id !== deleteId)
+
+  fs.writeFile('./db/db.json', JSON.stringify(newNotes, null, 3), (err) => err ? console.error(err) : console.info(`\nData written to db.json`))
+  res.JSON(notes);
 }) 
 
 app.listen(PORT, () =>

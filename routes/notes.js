@@ -2,13 +2,13 @@ const notes = require('express').Router();
 const { readFromFile, readAndAppend } = require('../helpers/fsUtils');
 const uuid = require('../helpers/uuid');
 
-notes.get('/', (req, res) => {
+notes.get('/api/', (req, res) => {
   console.info(`${req.method} request received for note`);
 
   readFromFile('./db/notes.json').then((data) => res.json(JSON.parse(data)));
 });
 
-notes.post('/', (req, res) => {
+notes.post('/api/', (req, res) => {
   // Log that a POST request was received
   console.info(`${req.method} request received to submit a note`);
 

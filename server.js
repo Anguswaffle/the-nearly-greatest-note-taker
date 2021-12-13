@@ -1,9 +1,8 @@
 const express = require('express');
 const path = require('path');
-// const api = require('./routes/index.js');
 const uuid = require('./helpers/uuid');
-const { readFromFile, readAndAppend } = require('./helpers/fsUtils');
-
+const notes = require('./db/db.json');
+const fs = require('fs');
 
 const PORT = 3001;
 
@@ -29,9 +28,14 @@ app.get('/notes', (req, res) =>
 app.get('/api/notes', (req, res) => {
   console.info(`${req.method} request received for note`);
 
-  readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
+  fs.readFile('./db/db.json', (err, data) => {
+    if (err) console.error(err);
+    else res.json(JSON.parse(data));
+  })
+    
 });
 
+// POST Route for notes API
 app.post('/api/notes', (req, res) => {
   // Log that a POST request was received
   console.info(`${req.method} request received to submit a note`);
@@ -48,7 +52,9 @@ app.post('/api/notes', (req, res) => {
       id: uuid(),
     };
 
-    readAndAppend(newNote, './db/db.json');
+    notes.push(newNote)
+
+    fs.writeFile('./db/db.json', JSON.stringify(notes, null, 3), (err) => err ? console.error(err) : console.info(`\nData written to db.json`))
 
     const response = {
       status: 'success',
@@ -61,8 +67,10 @@ app.post('/api/notes', (req, res) => {
   }
 });
 
+// DELETE Route for notes API
 app.delete('/api/notes/:id', (req, res) => {
   console.info(`${req.method} request received to delete a note`);
+  console.log(notes)
 }) 
 
 app.listen(PORT, () =>

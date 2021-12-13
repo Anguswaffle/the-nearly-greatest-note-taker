@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const uuid = require('./helpers/uuid');
-const notes = require('./db/db.json');
+let notes = require('./db/db.json');
 
 const PORT = process.env.PORT || 3001;
 
@@ -71,9 +71,9 @@ app.post('/api/notes', (req, res) => {
 app.delete('/api/notes/:id', (req, res) => {
   console.info(`${req.method} request received to delete a note`);
   const deleteId = req.params.id;
-  const newNotes = notes.filter(note => note.id !== deleteId)
+  notes = notes.filter(note => note.id !== deleteId)
 
-  fs.writeFile('./db/db.json', JSON.stringify(newNotes, null, 3), (err) => err ? console.error(err) : console.info(`\nData written to db.json`))
+  fs.writeFile('./db/db.json', JSON.stringify(notes, null, 3), (err) => err ? console.error(err) : console.info(`\nData written to db.json`))
   res.JSON(notes);
 }) 
 
